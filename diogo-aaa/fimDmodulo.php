@@ -4,7 +4,7 @@ $infos=[];
 $dataDPrestacao=[];
 function painel() {
    $true=true;
-   global $infos,$prefeitura, $numeroDanota, $data, $hora, $empresaPrestador, $cpfPrestador, $iePrestador, $imPrestador, $addressPrestador, $municipioPrestador, $emailPrestador, $empresaTomador, $cpfTomador, $ieTomador, $imTomador, $addressTomador, $municipioTomador, $emailTomador, $descricao, $aliquota, $baseDCalculo, $deducao, $valorliquido, $tipoDServico, $pis, $confins, $inss, $ir, $csll, $others, $totalNota, $basecalculo, $totaldeducoes, $iss, $iptu;
+   global $infos,$prefeitura, $numeroDanota, $data, $hora, $empresaPrestador, $cpfPrestador, $iePrestador, $imPrestador, $addressPrestador, $municipioPrestador, $emailPrestador, $empresaTomador, $cpfTomador, $ieTomador, $imTomador, $addressTomador, $municipioTomador, $emailTomador, $descricao, $aliquota, $baseDCalculo, $deducao, $valorliquido, $tipoDServico, $pis, $confins, $inss, $ir, $csll, $others, $totalNota, $basecalculo, $totaldeducoes, $iss, $iptu, $dataDPrestacao;
    while ($true) {
     echo "\t~ [1] INFORMAÇÕES NECESSÁRIAS PARA A EMISSÃO\n\t~ [2] INSERIR INFORMAÇÕES\n\t~ [3] CORRIGIR INFORMAÇÃO\n\t~ [4] CONFERIR NOTA\n\t~ [5] EMISSÃO\n";
     $opcao=readline("Digite a opção que deseja: ");
@@ -314,8 +314,8 @@ function painel() {
 }
 
 function perguntas() {
-    global $infos, $prefeitura, $empresaPrestador, $cpfPrestador, $iePrestador, $imPrestador, $addressPrestador, $municipioPrestador, $emailPrestador, $empresaTomador, $cpfTomador, $ieTomador, $imTomador, $addressTomador, $municipioTomador, $emailTomador, $descricao, $aliquota, $deducao, $tipoDServico, $pis, $confins, $inss, $ir, $csll, $others, $totalNota, $iss, $iptu;
-    $true1=true; $true2=true; $true3=true; $true4=true; $true5=true; $true6=true; $true7=true; $true8=true; $true9=true; $true10=true; $true11=true; $true12=true; $true13=true; $true14=true; $true15=true; $true16=true; $true17=true;
+    global $infos, $prefeitura, $empresaPrestador, $cpfPrestador, $iePrestador, $imPrestador, $addressPrestador, $municipioPrestador, $emailPrestador, $empresaTomador, $cpfTomador, $ieTomador, $imTomador, $addressTomador, $municipioTomador, $emailTomador, $descricao, $aliquota, $deducao, $tipoDServico, $pis, $confins, $inss, $ir, $csll, $others, $totalNota, $iss, $iptu, $dataDPrestacao;
+    $true0=true; $true1=true; $true2=true; $true3=true; $true4=true; $true5=true; $true6=true; $true7=true; $true8=true; $true9=true; $true10=true; $true11=true; $true12=true; $true13=true; $true14=true; $true15=true; $true16=true; $true17=true;
 
     $pergunta1=readline("Digite o nome da Prefeitura da sua cidade: ");
     echo"\n";
@@ -326,12 +326,17 @@ function perguntas() {
     echo"\n";
     $empresaPrestador=$pergunta2;
     $infos[]=$pergunta2;
-
+    while ($true0){
     $pergunta3=readline("Digite o CPF/CNPJ do Prestador de Serviço: ");
     echo"\n";
+    if (is_numeric($pergunta3)){ 
     $cpfPrestador=$pergunta3;
     $infos[]=$pergunta3;
-    
+    $true0=false;
+    } else {
+        echo "Valór inadequado, tente novamente, o CPF/CNPJ deve conter apenas números!\n";
+    }
+    }
     $pergunta4=readline("Digite o IE do Prestador de Serviço: ");
     echo"\n";
     $iePrestador=$pergunta4;
@@ -546,7 +551,7 @@ function perguntas() {
     $pergunta29=readline("Digite o Dia da prestação: ");
     echo"\n";
     if (is_numeric($pergunta29)&& $pergunta29!="a" && $pergunta29>0 && $pergunta29<32){
-    $dataDPrestacao[]=$pergunta29;
+    $dataDPrestacao[0]=$pergunta29;
     $true15=false;
     } else {
         echo "Valór inadequádo, tente novamente, o Dia da Prestação deve ser um número interio!\n";
@@ -555,8 +560,8 @@ function perguntas() {
     while ($true16) {
     $pergunta30=readline("Digite o Mês da prestação: ");
     echo"\n";
-    if (is_numeric($pergunta30)&& $pergunta30!="a" && $pergunta30>0 && $pergunta30<32){
-    $dataDPrestacao[]=$pergunta30;
+    if (is_numeric($pergunta30)&& $pergunta30!="a" && $pergunta30>0 && $pergunta30<13){
+    $dataDPrestacao[1]=$pergunta30;
     $true16=false;
     } else {
         echo "Valór inadequádo, tente novamente, o Mês da Prestação deve ser um número inteiro!\n";
@@ -565,8 +570,8 @@ function perguntas() {
     while ($true17) {
     $pergunta31=readline("Digite o Ano da prestação: ");
     echo"\n";
-    if (is_numeric($pergunta31)&& $pergunta31!="a" && $pergunta31>0 && $pergunta31<32){
-    $dataDPrestacao[]=$pergunta31;
+    if (is_numeric($pergunta31)&& $pergunta31!="a" && $pergunta31>0){
+    $dataDPrestacao[2]=$pergunta31;
     $true17=false;
     } else {
         echo "Valór inadequádo, tente novamente, o Ano da Prestação deve ser um número inteiro!\n";
@@ -660,7 +665,7 @@ function emitir() {
 }
 function data() {
     global $data, $hora;
-    date_default_timezone_set('America/Brasilia');
+    date_default_timezone_set('America/Sao_Paulo');
     $hora = date('H:i');
     $data = date('j'); 
 }
