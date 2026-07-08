@@ -118,7 +118,7 @@ do {
         if ($vazio==0) {
          echo "Carrinho vazrio";
         } else {
-            echo "====================\n    NOTA FISCAL\n====================\n";
+            echo "====================\n          NOTA FISCAL\n====================\n";
             for ($i=0;$i<$vazio;$i++) {
             $subTotal=$carrinhoPrecos[$i]*$carrinhoQtd[$i];
             echo "$i. $carrinhoProdutos[$i] x $carrinhoQtd[$i] = R$ $subTotal \n";

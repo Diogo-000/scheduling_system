@@ -6,10 +6,11 @@ function painel() {
    $true=true;
    global $infos,$prefeitura, $numeroDanota, $data, $hora, $empresaPrestador, $cpfPrestador, $iePrestador, $imPrestador, $addressPrestador, $municipioPrestador, $emailPrestador, $empresaTomador, $cpfTomador, $ieTomador, $imTomador, $addressTomador, $municipioTomador, $emailTomador, $descricao, $aliquota, $baseDCalculo, $deducao, $valorliquido, $tipoDServico, $pis, $confins, $inss, $ir, $csll, $others, $totalNota, $basecalculo, $totaldeducoes, $iss, $iptu;
    while ($true) {
-    echo "\t~ [1] INFORMAÇÕES NECESSÁRIAS PARA A EMISSÃO\n\t~ [2] INSERIR INFORMAÇÕES\n\t~ [3]CORRIGIR INFORMAÇÃO\n\t~ [4] CONFERIR NOTA\n\t~ [5] EMISSÃO\n";
+    echo "\t~ [1] INFORMAÇÕES NECESSÁRIAS PARA A EMISSÃO\n\t~ [2] INSERIR INFORMAÇÕES\n\t~ [3] CORRIGIR INFORMAÇÃO\n\t~ [4] CONFERIR NOTA\n\t~ [5] EMISSÃO\n";
     $opcao=readline("Digite a opção que deseja: ");
     switch ($opcao) {
      case 1:
+        limpar();
         echo "As informações que deve aparecer na nota são:
             1. Nome da prefeitura
             2. Informações do Prestador de Serviço
@@ -50,10 +51,13 @@ function painel() {
               -Crédito p/ Abatimento IPTU(R$)\n";
               break;
      case 2:
+            limpar();
             perguntas();
+            data();
             break;
      case 3:
-            if (count($infos)==33) {
+            limpar();
+            if (count($infos)>0) {
             $correcao=readline("Digite a informação que deseja corrigir: ");
             $correcao=strtoupper($correcao);
             switch ($correcao) {
@@ -96,6 +100,7 @@ function painel() {
                     } else {
                         echo "Resposta inadequada, tente novamente!";
                     }
+                    break;
                 case "IE" || "INSCRIÇÃO ESTADUAL":
                     $presOUtom=readline("A IE/Inscrição Estadual se refere ao Prestador ou ao Tomador de Serviço? ");
                     $presOUtom=strtoupper($presOUtom);
@@ -280,26 +285,28 @@ function painel() {
             }
             break;
      case 4:
+            limpar();
             calculos();
             emitir();
             break;
     case 5:
-            if (count($infos)==33) {
-            echo "Nota Emitida, com sucesso";
+            if (count($infos)>0) {
+            calculos();
+            echo "Nota Emitida, com sucesso\n";
             $opcao1=readline("Deseja Conferir a nota? ");
             $opcao1=strtoupper($opcao1);
             if ($opcao1=="SIM") {
                 emitir();
-                echo "\nEmissão concluida, agradecemos por utilizar nosso serviço ;)";
+                echo "\nEmissão concluida, agradecemos por utilizar nosso serviço ";
                 $true=false;
             } else if ($opcao1=="NÃO") {
-                echo "Emissão concluida, agradecemos por utilizar nosso serviço ;)";
+                echo "Emissão concluida, agradecemos por utilizar nosso serviço ";
                 $true=false;
             } else {
-                echo "Opção inválida, Tente novamente!";
+                echo "Opção inválida, Tente novamente!\n";
             }
             } else {
-                echo "Faltam informações, tente novamente após inserir todos os dados!";
+                echo "Faltam informações, tente novamente após inserir todos os dados!\n";
             }
             break;
             }
@@ -308,127 +315,263 @@ function painel() {
 
 function perguntas() {
     global $infos, $prefeitura, $empresaPrestador, $cpfPrestador, $iePrestador, $imPrestador, $addressPrestador, $municipioPrestador, $emailPrestador, $empresaTomador, $cpfTomador, $ieTomador, $imTomador, $addressTomador, $municipioTomador, $emailTomador, $descricao, $aliquota, $deducao, $tipoDServico, $pis, $confins, $inss, $ir, $csll, $others, $totalNota, $iss, $iptu;
+    $true1=true; $true2=true; $true3=true; $true4=true; $true5=true; $true6=true; $true7=true; $true8=true; $true9=true; $true10=true; $true11=true; $true12=true; $true13=true; $true14=true; $true15=true; $true16=true; $true17=true;
 
     $pergunta1=readline("Digite o nome da Prefeitura da sua cidade: ");
+    echo"\n";
     $prefeitura=$pergunta1;
     $infos[]=$pergunta1;
 
     $pergunta2=readline("Digite o Nome/Razão Social do Prestador de Serviço: ");
+    echo"\n";
     $empresaPrestador=$pergunta2;
     $infos[]=$pergunta2;
 
     $pergunta3=readline("Digite o CPF/CNPJ do Prestador de Serviço: ");
+    echo"\n";
     $cpfPrestador=$pergunta3;
     $infos[]=$pergunta3;
     
     $pergunta4=readline("Digite o IE do Prestador de Serviço: ");
+    echo"\n";
     $iePrestador=$pergunta4;
     $infos[]=$pergunta4;
 
     $pergunta5=readline("Digite o IM do Prestador de Serviço: ");
+    echo"\n";
     $imPrestador=$pergunta5;
     $infos[]=$pergunta5;
 
     $pergunta6=readline("Digite o Endereço do Prestador de Serviço: ");
+    echo"\n";
     $addressPrestador=$pergunta6;
     $infos[]=$pergunta6;
 
     $pergunta7=readline("Digite o Município do Prestador de Serviço: ");
+    echo"\n";
     $municipioPrestador=$pergunta7;
     $infos[]=$pergunta7;
 
     $pergunta8=readline("Digite o Email do Prestador de Serviço: ");
+    echo"\n";
     $emailPrestador=$pergunta8;
     $infos[]=$pergunta8;
 
     $pergunta9=readline("Digite o Nome/Razão Social do Tomador de Serviço: ");
+    echo"\n";
     $empresaTomador=$pergunta9;
     $infos[]=$pergunta9;
 
+    while ($true1) {
     $pergunta10=readline("Digite o CPF/CNPJ do Tomador de Serviço: ");
+    echo"\n";
+    if (is_numeric($pergunta10)&& $pergunta10!="a") {
     $cpfTomador=$pergunta10;
     $infos[]=$pergunta10;
-    
+    $true1=false;
+    } else {
+        echo "Valór inadequado, tente novamente, o CPF/CNPJ deve conter apenas números!\n";
+    }
+    }
+    while($true2){
     $pergunta11=readline("Digite o IE do Tomador de Serviço: ");
+    echo"\n";
+    if (is_numeric($pergunta11)&& $pergunta11!="a"){
     $ieTomador=$pergunta11;
     $infos[]=$pergunta11;
-
+    $true2=false;
+    } else {
+        echo "Valór inadequado, tente novamente, o IE deve conter apenas números!\n";
+    }
+    }
+    while($true3){
     $pergunta12=readline("Digite o IM do Tomador de Serviço: ");
+    echo"\n";
+    if (is_numeric($pergunta12)&& $pergunta12!="a"){
     $imTomador=$pergunta12;
     $infos[]=$pergunta12;
+    $true3=false;
+    } else {
+        echo "Valór inadequado, tente novamente, o IM deve conter apenas números!\n";
+    }
+    }
 
     $pergunta13=readline("Digite o Endereço do Tomador de Serviço: ");
+    echo"\n";
     $addressTomador=$pergunta13;
     $infos[]=$pergunta13;
 
     $pergunta14=readline("Digite o Município do Tomador de Serviço: ");
+    echo"\n";
     $municipioTomador=$pergunta14;
     $infos[]=$pergunta14;
 
     $pergunta15=readline("Digite o Email do Tomador de Serviço: ");
+    echo"\n";
     $emailTomador=$pergunta15;
     $infos[]=$pergunta15;
 
     $pergunta16=readline("Digite a Descrição do Serviço: ");
+    echo"\n";
     $descricao=$pergunta16;
     $infos[]=$pergunta16;
 
+    while($true4) {
     $pergunta17=readline("Digite a Alíquota do Serviço: ");
+    echo"\n";
+    if (is_numeric($pergunta17) && $pergunta17<26.5 && $pergunta17!="a"){
     $aliquota=$pergunta17;
     $infos[]=$pergunta17;
-
+    $true4=false;
+    } else {
+        echo  "Valór inadequádo, tente novamente, a Alíquota deve conter a porcentagem(máx: 26,5!\n";
+    }
+    }
+    while ($true5) { 
     $pergunta18=readline("Digite o Valor Total da Nota: ");
+    echo"\n";
+    if (is_numeric($pergunta18)&& $pergunta18!="a") {
     $totalNota=$pergunta18;
     $infos[]=$pergunta18;
-
+    $true5=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o Valor da Nota deve conter apenas números!\n";
+    }
+    }
+    while ($true6) { 
     $pergunta19=readline("Digite as Deduções: ");
+    echo"\n";
+    if (is_numeric($pergunta19)&& $pergunta19!="a"){
     $deducao=$pergunta19;
     $infos[]=$pergunta19;
-
+    $true6=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, as Deduções devem conter apenas números!\n";
+    }
+}
     $pergunta20=readline("Digite o Tipo de Serviço: ");
+    echo"\n";
     $tipoDServico=$pergunta20;
     $infos[]=$pergunta20;
 
+    while ($true7) {
     $pergunta21=readline("Digite o PIS: ");
+    echo"\n";
+    if (is_numeric($pergunta21)&& $pergunta21!="a") {
     $pis=$pergunta21;
     $infos[]=$pergunta21;
-
+    $true7=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o PIS deve conter apenas números!\n";
+    }
+}   
+    while ($true8){
     $pergunta22=readline("Digite o CONFINS: ");
+    echo"\n";
+    if (is_numeric($pergunta22)&& $pergunta22!="a"){
     $confins=$pergunta22;
     $infos[]=$pergunta22;
-
+    $true8=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o CONFINS deve conter apenas números!\n";
+    }
+}
+    while ($true9) {
     $pergunta23=readline("Digite o INSS: ");
+    echo"\n";
+    if (is_numeric($pergunta23) && $pergunta23!="a"){
     $inss=$pergunta23;
     $infos[]=$pergunta23;
-
+    $true9=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o INSS deve conter apenas números!\n";
+    }
+}
+    while($true10) { 
     $pergunta24=readline("Digite o IR: ");
+    echo"\n";
+    if (is_numeric($pergunta24)&& $pergunta24!="a"){
     $ir=$pergunta24;
     $infos[]=$pergunta24;
-
+    $true10=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o IR deve conter apenas números!\n";
+    }
+}
+    while ($true11) {
     $pergunta25=readline("Digite o CSLL: ");
+    echo"\n";
+    if (is_numeric($pergunta25)&& $pergunta25!="a"){
     $csll=$pergunta25;
     $infos[]=$pergunta25;
-
+    $true11=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o CSLL deve conter apenas números!\n";
+    }
+}
+    while ($true12) {
     $pergunta26=readline("Digite o ISS: ");
+    echo"\n";
+    if (is_numeric($pergunta26)&& $pergunta26!="a") {
     $iss=$pergunta26;
     $infos[]=$pergunta26;
-
+    $true12=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o ISS deve conter apenas números!\n";
+    }
+}
+    while ($true13){
     $pergunta27=readline("Digite o Total de Outros Impostos, caso haja: ");
+    echo"\n";
+    if (is_numeric($pergunta27)&& $pergunta27!="a"){
     $others=$pergunta27;
     $infos[]=$pergunta27;
-
+    $true13=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, os Outros impostos devem conter apenas números!\n";
+    }
+}
+    while ($true14){
     $pergunta28=readline("Digite o Crédito para Abatimento IPTU, caso haja: ");
+    echo"\n";
+    if (is_numeric($pergunta28)&& $pergunta28!="a"){
     $iptu=$pergunta28;
     $infos[]=$pergunta28;
-
+    $true14=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o Crédito deve conter apenas números!\n";
+    }
+}
+    while ($true15){
     $pergunta29=readline("Digite o Dia da prestação: ");
+    echo"\n";
+    if (is_numeric($pergunta29)&& $pergunta29!="a" && $pergunta29>0 && $pergunta29<32){
     $dataDPrestacao[]=$pergunta29;
-
+    $true15=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o Dia da Prestação deve ser um número interio!\n";
+    }
+}
+    while ($true16) {
     $pergunta30=readline("Digite o Mês da prestação: ");
+    echo"\n";
+    if (is_numeric($pergunta30)&& $pergunta30!="a" && $pergunta30>0 && $pergunta30<32){
     $dataDPrestacao[]=$pergunta30;
-
+    $true16=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o Mês da Prestação deve ser um número inteiro!\n";
+    }
+}
+    while ($true17) {
     $pergunta31=readline("Digite o Ano da prestação: ");
+    echo"\n";
+    if (is_numeric($pergunta31)&& $pergunta31!="a" && $pergunta31>0 && $pergunta31<32){
     $dataDPrestacao[]=$pergunta31;
+    $true17=false;
+    } else {
+        echo "Valór inadequádo, tente novamente, o Ano da Prestação deve ser um número inteiro!\n";
+    }
+}
 }
 
 function emitir() {
@@ -488,7 +631,7 @@ function emitir() {
              $valorliquido
         -------------------------------------------------
             Tipo de Serviço:        |  Data da Prestação:
-             $tipoDServico          |   $dataDPrestacao[1]/$dataDPrestacao[2]/$dataDPrestacao[3]
+             $tipoDServico          |   $dataDPrestacao[0]/$dataDPrestacao[1]/$dataDPrestacao[2]
         -------------------------------------------------
             PIS(R$):                |  CONFINS(R$):
              $pis                   |   $confins 
@@ -529,4 +672,8 @@ $totaldeducoes=$deducao;
 $totalNota=$baseDCalculo+$deducao;
 $valorliquido=$totalNota-($iss+$pis+$confins+$inss+$ir+$csll+$others);
 }
+function limpar () {
+    system("powershell -Command Clear-Host");
+}
+limpar();
 painel();
