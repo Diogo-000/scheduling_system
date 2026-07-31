@@ -1,8 +1,12 @@
 <?php
 $client_list=[];
 $scheduled_times=[];
+$continue=1;
+$conditional1=true;
+$conditional2=true;
 
 include 'authentication.php';
+include 'starts.php';
 
 echo "\tWelcome to the scheduling service!\n";
 echo "Would you like to start?
@@ -10,9 +14,6 @@ echo "Would you like to start?
       Type [1],
       If not:
       Type [2]\n";
-$start=readline("~~~>");
+$start=readline("~> ");
 
-while ($start==1) {
-$name=readline("Insert your name: ");
-validated_name();
-}
+starters();
