@@ -19,7 +19,10 @@ function validated_name() {
 }
 function validated_hour() {
     global $hour, $scheduled_times;
-    if (in_array($hour, $scheduled_times)==false) {
+    if (in_array($hour, $scheduled_times)==false
+        && is_numeric($hour)
+        && $hour<25 
+        && $hour>0) {
         $scheduled_times[]=$hour;
     } else {
         echo "Time slot already taken, please, try again in other hour";
