@@ -1,17 +1,20 @@
 <?php
 function existing_in_array() {
-    global $name, $client_list, $conditional;
-    if (in_array($name, $client_list)==true) {
+    global $name, $client_list, $conditional1;
+    if (in_array($name, $client_list)) {
         echo "Appointment already scheduled!";
     } 
     else {
         $client_list[]=$name;
-        $conditional=false;
+        $conditional1=false;
     }
 }
 function validated_name() {
     global $name;
-    if (!is_string($name)==false) {
+    if (empty($name) ||
+        is_numeric($name) ||
+        !preg_match("/^[a-zA-ZÀ-ÿ ]+$/u", $name)) 
+        {
         echo "Invalid name, please, try again";
     }
     else {

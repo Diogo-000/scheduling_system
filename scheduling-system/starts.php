@@ -1,8 +1,9 @@
 <?php
+require_once 'main_menu.php';
 function starters() {
  global $start;
  if ($start==1) {
-  
+  menu();
 } 
  else if ($start==2) {
     echo "Thank you for using our service, see you later!\n";
@@ -19,6 +20,7 @@ function starters() {
    $restart=readline("~> ");
      if ($restart==1) {
         $condition=0;
+        menu();
    } 
      else if ($restart==2) {
         $condition=0;

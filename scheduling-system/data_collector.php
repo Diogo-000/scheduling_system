@@ -1,5 +1,5 @@
 <?php
-include 'authentication.php';
+require_once 'authentication.php';
 function collect_data() {
     global $client_list, $conditional1, $conditional2;
     while ($conditional1==true) {
