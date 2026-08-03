@@ -9,6 +9,8 @@ $conditional2=true;
 #progress is a variable they enables to looping in menu.
 $progress="Y";
 
+$continue="Y";
+
 require_once 'authentication.php';
 require_once 'starts.php';
 require_once 'data_collector.php';
