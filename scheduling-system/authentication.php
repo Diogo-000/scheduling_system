@@ -12,8 +12,7 @@ function existing_in_array() {
 function validated_name() {
     global $name;
     if (empty($name) ||
-        is_numeric($name) ||
-        !preg_match("/^[a-zA-ZÀ-ÿ ]+$/u", $name)) 
+        is_numeric($name) ) 
         {
         echo "Invalid name, please, try again";
     }
