@@ -1,7 +1,7 @@
 <?php
 require_once 'authentication.php';
 function collect_data() {
-    global $client_list, $conditional1, $conditional2;
+    global $client_list, $conditional1, $conditional2, $name;
     while ($conditional1==true) {
     $name=readline("Enter your name: ");
     validated_name();
