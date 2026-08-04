@@ -18,7 +18,7 @@ function menu() {
     switch ($option) {
        case 1:
         echo "Hello, it is important to note that we operate from 7:00 AM to 12:00 PM, reopening at 1:00 PM and closing at 6:00 PM. Thank you again for choosing us!\n";
-       while($continue=="Y") {
+       while($continue=="Y" || $continue="YES") {
           $continue=readline("If you want to continue scheduling appointments, type Y or
           YES; if not type N or NO: ");
           echo "\n";
@@ -26,8 +26,10 @@ function menu() {
           collect_data();
          if ($continue=="YES" || $continue=="Y") {
             collect_data();
+            $continue="Y";
          } else if ($continue=="NO" || $continue=="N") {
             echo "Ok, thanks for you preference!\n";
+            $continue!="Y";
          } else {
            echo "Option unavailable, please try again!";
          }
